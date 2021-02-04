@@ -4,6 +4,7 @@
     :id = "id"
     :name = "name"
     :value = "value"
+    @click="$emit('click')"
   >
   <input v-else
     :type = "type"
