@@ -8,10 +8,6 @@
 <script>
 export default {
     name: "Card",
-    // props: [
-    //     "name",
-    //     "url"
-    // ]
     props: {
         name: {
             type: String,

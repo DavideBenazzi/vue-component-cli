@@ -3,7 +3,8 @@
     <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
     <Title msg="Hello" />
-    <FormCustom />
+    <FormCustom msg="Cerca un Pokemon" @sendForm="searchPokemon" />
+    <FormCustom msg="Cerca un tipo di Pokemon" @sendForm="searchType" />
     <Cards :cards="pokemons" />
   </div>
 </template>
@@ -36,6 +37,37 @@ export default {
     }).catch((err) => {
       console.log(err)
     });
+  },
+  methods: {
+    searchPokemon(text) {
+      console.log(text);
+      this.axios.get(`${ this.base_url }/pokemon/${text}`).then((result) => {
+        console.log(result);
+        this.pokemons = [{
+          name: result.data.name,
+          height: result.data.height,
+          weight: result.data.weight,
+        }];
+      }).catch((err) => {
+      console.log(err)
+      });
+    },
+    searchType(text) {
+      console.log(text);
+      this.axios.get(`${ this.base_url }/type/${text}`).then((result) => {
+        console.log(result);
+        const results = result.data.pokemon;
+        const pokemons = results.map(element => {
+          return { 
+            name: element.pokemon.name,
+            url: element.pokemon.url
+            };
+        });
+        this.pokemons = pokemons;
+      }).catch((err) => {
+      console.log(err)
+      });
+    }
   },
 };
 </script>
